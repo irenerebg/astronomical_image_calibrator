@@ -45,13 +45,13 @@ def median_absolute_deviation(bits):
     mad_sigma = mad_std(bits, axis=0)
     median = np.median(bits, axis=0)            # images are combined by the median
     
-    excluidos = (bits - median) / mad_sigma > 1 # those values >1 away are excluded
+    excluded = (bits - median) / mad_sigma > 1 # those values >1 away are excluded
     
     bits = bits.astype(float)
 
-    valores_originales = bits[excluidos]        # original values are saved
-    bits[excluidos] = np.nan                    # we use nan to omit those values when we use the mean
+    original_values = bits[excluded]        # original values are saved
+    bits[excluded] = np.nan                    # we use nan to omit those values when we use the mean
 
     clip_combine = np.nanmean(bits, axis=0)     # we apply the mean without the nan values
-    bits[excluidos] = valores_originales        # nan values are turned in to the original values
+    bits[excluded] = original_values        # nan values are turned in to the original values
     return clip_combine
