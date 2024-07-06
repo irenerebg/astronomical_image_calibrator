@@ -37,7 +37,7 @@ def median_absolute_deviation(bits):
     '''Computes the MAD from a matrix of values
     
     Arguments:
-    - bits (array, unit18): an array with all the images to combine
+    - bits (array, unit16): an array with all the images to combine
     
     Returns:
     - average (f8): combined values by MAD
