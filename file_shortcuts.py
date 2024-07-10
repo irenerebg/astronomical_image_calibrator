@@ -22,6 +22,20 @@ def file_opener(path):
     '''
     return fits.open(path)
 
+def save_header(path, n):
+    '''Returns the header of a fits file
+    
+    Arguments:
+    - path (string): file opening path
+    - n (int): number of images
+    
+    Returns:
+    - fits (header): header of a fits file
+    '''
+    filename = path + f"{n:03d}.fits"
+    file = file_opener(filename)
+    return file[0].header
+
 def file_array_generator(path,n):
     '''
     Generates an array of matrices, each matrix is the data matrix of the values
@@ -69,7 +83,7 @@ def hdu_master_generator(image, time_exp, image_name, method):
     # Write the FITS file
     hdu.writeto(f'./master_files/{method}/Master_{image_name}.fits', overwrite=True)
         
-def hdu_image_generator(image, time_exp, image_name, method, i):
+def hdu_image_generator(image, header, image_name, method, i):
     '''
     Generates an array of matrices, each matrix is the data matrix of the values
     of the image pixels
@@ -85,6 +99,6 @@ def hdu_image_generator(image, time_exp, image_name, method, i):
     '''
     # Create the HDU object
     hdu = fits.PrimaryHDU(image)
-    hdu.header['EXPTIME'] = time_exp
+    hdu.header = header
     # Write the FITS file
     hdu.writeto(f'./calibrated_files/{method}/{image_name}/Calibrated_{image_name}_{i:03d}.fits', overwrite=True)
