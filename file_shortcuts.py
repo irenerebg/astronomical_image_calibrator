@@ -98,7 +98,6 @@ def hdu_image_generator(image, header, image_name, method, i):
     - fits file with data values and exposure time saved
     '''
     # Create the HDU object
-    hdu = fits.PrimaryHDU(image)
-    hdu.header = header
+    hdu = fits.PrimaryHDU(data=image, header=header)
     # Write the FITS file
     hdu.writeto(f'./calibrated_files/{method}/{image_name}/Calibrated_{image_name}_{i:03d}.fits', overwrite=True)
